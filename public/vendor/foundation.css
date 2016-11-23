@@ -2086,11 +2086,7 @@ select {
     padding-right: 0.5rem;
     padding-bottom: 0.5rem;
     padding-left: 0.5rem; }
-  .callout.large {
-    padding-top: 3rem;
-    padding-right: 3rem;
-    padding-bottom: 3rem;
-    padding-left: 3rem; }
+
 
 .close-button {
   position: absolute;
@@ -3323,7 +3319,8 @@ table.hover tbody tr:nth-of-type(even):hover {
   max-width: 100%;
   transition: box-shadow 200ms ease-out;
   border-radius: 0;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  width: 100%; }
   .thumbnail:hover, .thumbnail:focus {
     box-shadow: 0 0 6px 1px rgba(33, 153, 232, 0.5); }
 
@@ -4224,3 +4221,7 @@ table.hover tbody tr:nth-of-type(even):hover {
 .long-delay {
   -webkit-animation-delay: 700ms !important;
           animation-delay: 700ms !important; }
+
+.blog-post > h3 {
+  text-align: center;
+}
