@@ -5,3 +5,13 @@ body {
     color: #244751;
   }
 }
+
+.jumbotron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 80%;
+    }
+}

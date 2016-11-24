@@ -1,0 +1,13 @@
+body {
+  background-color: #EEE; }
+  body h1 {
+    color: #244751; }
+
+.jumbotron {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .jumbotron img {
+    width: 80%; }
+
+/*# sourceMappingURL=output.css.map */
