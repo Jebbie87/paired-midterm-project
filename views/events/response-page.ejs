@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<% include ./partials/_header.ejs %>
+<% include ../partials/_header.ejs %>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -23,6 +23,8 @@
 
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
+    <link rel="stylesheet" href="/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
 
@@ -30,39 +32,52 @@
 
   </head>
 
-  <body>
+ <body>
 
-<!--       <div class="jumbotron">
-        <h1>Let us help you make a new event!</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div> -->
+<!-- The form to get the event details -->
+<!-- <form action="/:uniqueURL" method="POST">
+  <label for="date">Date</label>
+    <input type="text" id="date" name="date">
+  <label for="time1">Time1</label>
+    <input type="text" id="time1" name="time1">
+  <label for="time2">Time2</label>
+    <input type="text" id="time2" name="time2">
+  <label for="time3">Time3</label>
+    <input type="text" id="time3" name="time3">
+  <label for="create">Create!</label>
+    <input type="submit" value="submit">
+</form>
 
-      <div class="jumbotron">
-      <img src ="/images/Events-Calendar-pic.jpg"
-      </div>
-<!--
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div> -->
-
-
-
-
-    </div> <!-- /container -->
-
-      <footer class="footer">
-        <p>&copy; JACK Industries</p>
-      </footer>
+  <i class="fa fa-trash-o"></i> -->
 
   </body>
+
+<!-- The event details page -->
+<div id="details">
+  <div class="date">
+    November 24, 2016 Tuesday
+  </div>
+  <div id="time1">
+    2:00 PM
+  </div>
+  <div id="time2">
+    4:00 PM
+  </div>
+  <div id="time3">
+    6:00 PM
+  </div>
+</div>
+
+<div id="response">
+  <table>
+
+  <form action="/events/uniqueurl" method="POST">
+    <tr><input type="checkbox">YES</tr>
+    <tr><input type="checkbox">NO</tr>
+    <tr><input type="submit" value="submit"></tr>
+  </form>
+
+  </table>
+</div>
+
 </html>
