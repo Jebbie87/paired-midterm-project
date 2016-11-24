@@ -1,66 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Definitely Not Doodle</title>
-    <!--Foundation style sheet  -->
-    <link rel="stylesheet" href="/vendor/foundation.css" />
-    <!--Foundation style sheet  -->
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <!--Foundation style sheet  -->
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <!--Foundation style sheet  -->
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css"/>
-    <!--foundation jquery script  -->
-    <script src="/scripts/jquery.js"></script>
-    <!--default file script  -->
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    <!--foundation script  -->
-    <script src="/scripts/what-input.js"></script>
-    <!--foundation script  -->
-    <script src="/scripts/foundation.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-    <!--foundation script  -->
-    <script>
-      $(document).foundation();
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
   </head>
+
   <body>
 
-    <!-- Start Top Bar -->
-    <div class="top-bar">
-      <div class="top-bar-left">
-          <a href="/">Home</a>
-      </div>
-    </div>
-    <!-- End Top Bar -->
-
-    <div class="callout large primary">
-      <div class="row column text-center">
-        <h1>Definitely Not Doodle</h1>
-        <h3 class="subheader">Make Your Own Events</h3>
-      </div>
-    </div>
-
-    <!-- We can now combine rows and columns when there's only one column in that row -->
-    <div class="row medium-8 large-7 columns">
-      <div class="blog-post">
-        <img class="thumbnail" src="/images/Events-Calendar-pic.jpg">
-        <p>Our little block of text that we are going to put here</p>
-        <div class="callout">
-          <ul class="menu simple">
-            <li>Author: Andrew Kim and Jeffrey Chang</a></li>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+            <li role="presentation"><a href="#">About</a></li>
+            <li role="presentation"><a href="#">Contact</a></li>
           </ul>
+        </nav>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Jumbotron heading</h1>
+        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>Subheading</h4>
+          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+          <h4>Subheading</h4>
+          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+          <h4>Subheading</h4>
+          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        </div>
+
+        <div class="col-lg-6">
+          <h4>Subheading</h4>
+          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+          <h4>Subheading</h4>
+          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+          <h4>Subheading</h4>
+          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
         </div>
       </div>
-    </div>
 
+      <footer class="footer">
+        <p>&copy; 2016 Company, Inc.</p>
+      </footer>
 
-<!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
-    <!-- <script>
-      $(document).foundation();
-    </script> -->
-
+    </div> <!-- /container -->
 
   </body>
 </html>
