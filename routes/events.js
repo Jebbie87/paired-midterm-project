@@ -11,24 +11,29 @@ module.exports = (knex) => {
 
   router.post("/", (req, res) => {
     const title = req.body.title;
-    const name = req.body.name;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const email = req.body.email;
     const description = req.body.description;
-    knex("create_events")
-      .insert([{name: title}])
+    const date = req.body.date;
+    knex("events")
+      .insert([{title: title, date: date, description: description}])
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        knex.destroy();
+      })
 
-    knex()
-
+    knex("attendees")
+      .insert([{first_name: firstName, last_name: lastName, email: email}])
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        knex.destroy();
+      })
   })
-
-  // router.get("/", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
 
   return router;
 }
