@@ -1,3 +1,5 @@
+// client side
+
 const generateUniqueURL = function() {
   const alphaNumeric = '01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   let uniqueURL = '';
@@ -8,3 +10,25 @@ const generateUniqueURL = function() {
   };
    return uniqueURL;
 };
+
+
+
+$(document).ready(function() {
+  const counter = {
+      time1: 0,
+      time2: 0,
+      time3: 0
+    }
+
+
+  $('#response').on('submit', function(event) {
+  event.preventDefault();
+
+    $.post('/events/:uniqueurl', function(data) {
+
+      console.log(data);
+    }
+  });
+
+
+});

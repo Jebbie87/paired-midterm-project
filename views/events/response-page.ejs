@@ -19,14 +19,15 @@
     <!-- <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" /> -->
 
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
     <link rel="stylesheet" href="/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-    </script>
+    <script type="javascript/text" href="../public/scripts/app.js" ></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -53,31 +54,67 @@
   </body>
 
 <!-- The event details page -->
-<div id="details">
+<!-- <div id="details">
   <div class="date">
     November 24, 2016 Tuesday
   </div>
-  <div id="time1">
-    2:00 PM
+  <div class="time1">
+    2:00 PM      <%= time1 %>
   </div>
-  <div id="time2">
-    4:00 PM
+  <div class="time2">
+    4:00 PM      <%= time2 %>
   </div>
-  <div id="time3">
-    6:00 PM
+  <div class="time3">
+    6:00 PM      <%= time3 %>
   </div>
-</div>
+</div> -->
 
-<div id="response">
+<div id="res">
   <table>
 
-  <form action="/events/uniqueurl" method="POST">
-    <tr><input type="checkbox">YES</tr>
-    <tr><input type="checkbox">NO</tr>
+  <form id="response-time1" action="/events/uniqueurl" method="POST">
+    <tr>
+      <div class="time1">
+        2:00 PM      <%= time1 %>
+        <input class="yes" type="radio" name="going1" value="1">YES</input>
+        <input class="no" type="radio" name="going1" value="0">NO</input>
+      </div>
+    </tr>
+
+    <tr>
+      <div class="time2">
+        4:00 PM      <%= time2 %>
+        <input class="yes" type="radio" name="going2" value="1">YES</input>
+        <input class="no" type="radio" name="going2" value="0">NO</input>
+      </div>
+    </tr>
+
+    <tr>
+      <div class="time3">
+        6:00 PM      <%= time3 %>
+        <input class="yes" type="radio" name="going3" value="1">YES</input>
+        <input class="no" type="radio" name="going3" value="0">NO</input>
+      </div>
+    </tr>
+
+    <tr><input type="submit" value="submit"></tr>
+  </form>
+<!--
+  <form id="response-time2" action="/events/uniqueurl" method="POST">
+    <tr><input class="yes" type="radio" name="going" value="1">YES</tr>
+    <tr><input class="no" type="radio" name="going" value="0">NO</tr>
     <tr><input type="submit" value="submit"></tr>
   </form>
 
+  <form id="response-time3" action="/events/uniqueurl" method="POST">
+    <tr><input class="yes" type="radio" name="going" value="1">YES</tr>
+    <tr><input class="no" type="radio" name="going" value="0">NO</tr>
+    <tr><input type="submit" value="submit"></tr>
+  </form> -->
+
   </table>
 </div>
+
+<div class="counter"></div>
 
 </html>
