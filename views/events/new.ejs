@@ -21,6 +21,7 @@
   <!-- <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" /> -->
 
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/new-event.css" type="text/css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
 
@@ -37,13 +38,13 @@
   <script type="text/javascript" src="/scripts/time.js"></script>
 </head>
 <body>
-
-<form action="/events/new" method="post" call="form-inline">
+<div class="schoodle-container">
+<form action="/events/new" method="post">
   <div class="panel-heading panel-success">
     <!-- <div class="panel-heading">Your Event</div> -->
     <input type="text" class="form-control input-lg" placeholder="Event Title" name="title">
   </div>
-
+<div class="row">
   <div class="form-group col-xs-4">
     <label for="first-name">First Name</label>
     <input type="text" class="form-control" name="firstName">
@@ -56,6 +57,7 @@
     <label for="email">Email</label>
     <input type="email" class="form-control" name="email">
   </div>
+</div>
   <div class="form-group">
     <label for="description">Description:</label>
     <textarea class="form-control" rows="4" name="description"></textarea>
@@ -67,28 +69,37 @@
           <span class="glyphicon glyphicon-th"></span>
       </div>
   </div>
-
-  <div class="input-group clockpicker col-xs-7" data-placement="bottom" data-align="top">
+<div class="row">
+<div class="form-group col-xs-4">
+  <div class="input-group clockpicker" data-placement="bottom" data-align="top">
     <input type="text" class="form-control" name="time1" placeholder="Time">
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-time"></span>
     </span>
   </div>
-  <div class="input-group clockpicker col-xs-7" data-placement="bottom" data-align="top">
+</div>
+
+<div class="form-group col-xs-4">
+  <div class="input-group clockpicker" data-placement="bottom" data-align="top">
     <input type="text" class="form-control" name="time2" placeholder="Time">
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-time"></span>
     </span>
   </div>
-  <div class="input-group clockpicker col-xs-7" data-placement="bottom" data-align="top">
+</div>
+
+<div class="form-group col-xs-4">
+  <div class="input-group clockpicker" data-placement="bottom" data-align="top">
     <input type="text" class="form-control" name="time3" placeholder="Time">
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-time"></span>
     </span>
   </div>
-
+</div>
+</div>
   <button type="submit" class="btn btn-info">Submit</button>
 </form>
+</div>
 
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>

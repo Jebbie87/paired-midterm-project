@@ -3,6 +3,7 @@
 $(document).ready(function() {
   $('.clockpicker').clockpicker({
     twelvehour: true,
-    autoclose: true
+    autoclose: true,
+    donetext: "Done"
   });
 })

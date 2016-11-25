@@ -45,6 +45,7 @@ module.exports = (knex) => {
       message: [],
       eventTime1: '1'
     };
+  router.get('/:uniqueurl', (req, res) => {
 
     knex('attendees')
       .join('response', 'attendees.id', '=', 'response.attendees_id')

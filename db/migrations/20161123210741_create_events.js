@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
       table.string("title");
       table.date("date");
       table.string("description");
+      table.string("uniqueurl");
     })
   ])
 };
