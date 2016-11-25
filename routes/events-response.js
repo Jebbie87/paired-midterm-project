@@ -14,7 +14,7 @@ const counter = {
       message: []
     };
 
-  router.get('/uniqueurl', (req, res) => {
+  router.get('/:uniqueurl', (req, res) => {
 
     knex('attendees')
       .join('response', 'attendees.id', '=', 'response.attendees_id')
