@@ -22,6 +22,7 @@ module.exports = (knex) => {
     const time3 = req.body.time3;
 
     waterfall([
+      // THIS FUNCTION PUSHES DATA INTO EVENTS
       function(callback){
         return knex("events")
           .returning('id')
@@ -29,6 +30,7 @@ module.exports = (knex) => {
           .then(response => callback(null, response))
           .catch(callback)
       },
+      // THIS FUNCTION PUSHES DATA INTO EVENT_TIMES TABLE
       function(event_data, callback){
         return knex("event_times")
           .insert([{
@@ -44,6 +46,7 @@ module.exports = (knex) => {
           .then(response => callback(null, response))
           .catch(callback)
       },
+      // THIS FUNCTION PUSHES DATA INTO ATTENDEES TABLE
       function(response, callback){
         return knex("attendees")
           .insert([{first_name: firstName, last_name: lastName, email: email}])

@@ -21,15 +21,16 @@ const renderMessages = function(){
 }
 
 $(document).ready(function() {
+
 const loadMessage = function(){
 
 }
 
   $.ajax({
-    url: '/events/uniqueurl',
+    url: '/events/uniqueurl/json',
     method: 'GET'
   }).done(function(res){
-    console.log(res)
+    console.log(res.messages)
   })
 
   $('form').on('submit', function(event) {
