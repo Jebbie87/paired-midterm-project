@@ -14,20 +14,27 @@
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
   <!-- Bootstrap core CSS -->
   <!-- <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
-
+  <!-- Font Awesome Style Sheet for Hover Over Icons -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" />
 
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script> -->
+  <!--Eonasdan/bootstrap-datetimepicker requirements-->
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment-with-locales.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 </head>
 <body>
 
@@ -56,10 +63,106 @@
     <label for="description">Description:</label>
     <textarea class="form-control" rows="5" name="description"></textarea>
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="date">Date</label>
     <input type="text" class="form-control" name="date">
+  </div> -->
+  <div class="input-group date datepicker" data-provide="datepicker">
+      <input type="text" class="form-control" name="date" placeholder="Date">
+      <div class="input-group-addon">
+          <span class="glyphicon glyphicon-th"></span>
+      </div>
   </div>
+  <!-- <div class="container">
+      <div class="col-sm-6" style="height:130px;">
+          <div class="form-group">
+              <div class='input-group date' id='datetimepicker10'>
+                  <input type='text' class="form-control" />
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar">
+                      </span>
+                  </span>
+              </div>
+          </div>
+      </div>
+    </div> -->
+    <div class="container">
+        <div class="col-sm-6" style="height:130px;">
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker8'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar">
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="input-group clockpicker">
+        <input type="text" class="form-control" value="09:30">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+        </span>
+    </div> -->
+
+    <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+        <input type="text" class="form-control">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+        </span>
+    </div>
+
+  <!-- </div> -->
   <button type="submit" class="btn btn-info">Submit</button>
 </form>
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.datepicker').datepicker({
+        autoclose: true,
+        todayHighlight: true
+      });
+    })
+  </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function () {
+          $('#datetimepicker8').datetimepicker({
+              icons: {
+                  time: "fa fa-clock-o",
+                  date: "fa fa-calendar",
+                  up: "fa fa-arrow-up",
+                  down: "fa fa-arrow-down"
+              }
+          });
+      });
+  </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+        $('.clockpicker').clockpicker();
+      })
+  </script>
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.clockpicker').clockpicker();
+    });
+  })
+  </script> -->
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimepicker10').datetimepicker({
+            viewMode: 'years',
+            format: 'MM/YYYY'
+        });
+    }); -->
+  <!-- </script> -->
 </body>
+</html>
