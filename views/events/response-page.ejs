@@ -25,34 +25,18 @@
 
     <link rel="stylesheet" href="/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
 
-    <script type="javascript/text" href="../public/scripts/app.js" ></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+    <script src="/scripts/app.js" ></script>
+
   </head>
 
  <body>
 
-<!-- The form to get the event details -->
-<!-- <form action="/:uniqueURL" method="POST">
-  <label for="date">Date</label>
-    <input type="text" id="date" name="date">
-  <label for="time1">Time1</label>
-    <input type="text" id="time1" name="time1">
-  <label for="time2">Time2</label>
-    <input type="text" id="time2" name="time2">
-  <label for="time3">Time3</label>
-    <input type="text" id="time3" name="time3">
-  <label for="create">Create!</label>
-    <input type="submit" value="submit">
-</form>
-
-  <i class="fa fa-trash-o"></i> -->
-
-  </body>
-
+<!-- This is the area where the new user can choose the times they want to go to. Also includes counter -->
 <div id="user-response">
   <table>
 
@@ -84,6 +68,7 @@
       </div>
     </tr>
 
+    <!-- The form where a new user will put in name and email and will also submit their times -->
     <div class="user-info">
       <input class="first-name" type="text" name="first-name">Please enter your first name here</input>
       <br>
@@ -99,8 +84,14 @@
   </table>
 </div>
 
-<div class="all-responses">
-  Everyone's reponse will be going into this div
-</div>
+<!-- This box is where all the user responses will be -->
+  <div class="user-responses">
+  <% message.forEach(function(response) { %>
+  <%= response %>
+  <br>
+  <%  }); %>
+  </div>
+
+  </body>
 
 </html>
