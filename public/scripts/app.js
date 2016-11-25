@@ -11,8 +11,6 @@ const generateUniqueURL = function() {
    return uniqueURL;
 };
 
-
-
 $(document).ready(function() {
 
   $('#response').on('submit', function(event) {
@@ -22,6 +20,7 @@ $(document).ready(function() {
 
       console.log(data);
     }
+
   });
 
 
