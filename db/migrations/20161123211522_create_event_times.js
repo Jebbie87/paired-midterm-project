@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable("event_times", function(table){
       table.increments();
       table.string("times");
-      table.integer("events_id");
+      table.integer("event_id");
     })
   ])
 };

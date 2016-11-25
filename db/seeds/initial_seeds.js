@@ -26,9 +26,9 @@ exports.seed = function(knex, Promise) {
                     .then(function() {
                       return knex
                         .insert([
-                          {times: '1:00', events_id: 1},
-                          {times: '3:00', events_id: 3},
-                          {times: '6:00', events_id: 2}
+                          {times: '1:00', event_id: 1},
+                          {times: '3:00', event_id: 3},
+                          {times: '6:00', event_id: 2}
                         ])
                         .into('event_times')
                         .returning('id')
