@@ -14,12 +14,6 @@ const generateUniqueURL = function() {
 
 
 $(document).ready(function() {
-  const counter = {
-      time1: 0,
-      time2: 0,
-      time3: 0
-    }
-
 
   $('#response').on('submit', function(event) {
   event.preventDefault();
