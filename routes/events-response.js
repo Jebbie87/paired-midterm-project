@@ -29,12 +29,13 @@ const counter = {
     counter.time2 += time2;
     counter.time3 += time3;
 
+    // inserting the attendee's first name, last name and email into the attendees table
     knex('attendees')
       .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
       .returning('id')
       .then(function(attendeesId) {
         let id = Number(attendeesId[0]);
-
+        // inserting response and the attendee's id into the response table
         knex('response')
           .insert([ {response: time1, attendees_id: id}, {response: time2, attendees_id: id}, {response: time3, attendees_id: id} ])
           .then(function(results) {
@@ -48,15 +49,8 @@ const counter = {
         console.log(err)
       })
 
-    // knex('event_times')
-    //   .insert( [{times: time1}, {times: time2}, {times: time3}] )
-    //   .then(function(results) {
-    //     console.log(results);
-    //   })
-
     res.render('./events/response-page', counter);
   });
 
   return router;
-
 };
