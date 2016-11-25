@@ -12,6 +12,9 @@ const generateUniqueURL = function() {
 };
 
 
+const loadMessage = function(){
+
+}
 
 const renderMessages = function(){
   let output = '';

@@ -41,6 +41,7 @@ const counter = {
     const userFirstName = req.body['first-name'];
     const userLastName = req.body['last-name'];
     const userEmail = req.body['user-email'];
+
     counter.time1 += time1;
     counter.time2 += time2;
     counter.time3 += time3;
