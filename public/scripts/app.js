@@ -16,10 +16,10 @@ $(document).ready(function() {
   $('#response').on('submit', function(event) {
   event.preventDefault();
 
-    $.post('/events/:uniqueurl', function(data) {
+    // $.post('/events/:uniqueurl', function(data) {
 
-      console.log(data);
-    }
+    //   console.log(data);
+    // }
 
   });
 
