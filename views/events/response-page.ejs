@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<% include ../partials/_header.ejs %>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <!-- <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" /> -->
+
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+    <link rel="stylesheet" href="/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
+
+    <script type="javascript/text" href="../public/scripts/app.js" ></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </head>
+
+ <body>
+
+<!-- The form to get the event details -->
+<!-- <form action="/:uniqueURL" method="POST">
+  <label for="date">Date</label>
+    <input type="text" id="date" name="date">
+  <label for="time1">Time1</label>
+    <input type="text" id="time1" name="time1">
+  <label for="time2">Time2</label>
+    <input type="text" id="time2" name="time2">
+  <label for="time3">Time3</label>
+    <input type="text" id="time3" name="time3">
+  <label for="create">Create!</label>
+    <input type="submit" value="submit">
+</form>
+
+  <i class="fa fa-trash-o"></i> -->
+
+  </body>
+
+<div id="user-response">
+  <table>
+
+  <form id="response-time1" action="/events/uniqueurl" method="POST">
+    <tr>
+      <div class="time1">
+        2:00 PM
+        <input class="yes" type="radio" name="going1" value="1">YES</input>
+        <input class="no" type="radio" name="going1" value="0">NO</input>
+        <%= time1 %> people are going in this time slot!
+      </div>
+    </tr>
+
+    <tr>
+      <div class="time2">
+        4:00 PM
+        <input class="yes" type="radio" name="going2" value="1">YES</input>
+        <input class="no" type="radio" name="going2" value="0">NO</input>
+        <%= time2 %> people are going in this time slot!
+      </div>
+    </tr>
+
+    <tr>
+      <div class="time3">
+        6:00 PM
+        <input class="yes" type="radio" name="going3" value="1">YES</input>
+        <input class="no" type="radio" name="going3" value="0">NO</input>
+        <%= time3 %> people are going in this time slot!
+      </div>
+    </tr>
+
+    <div class="user-info">
+      <input class="first-name" type="text" name="first-name">Please enter your first name here</input>
+      <br>
+      <input class="last-name" type="text" name="last-name">Please enter your last name here</input>
+      <br>
+      <input class="user-email" type="email" name="user-email">Please enter your email here</input>
+      <br>
+      <input class="submit" type="submit" value="submit">
+    </div>
+
+  </form>
+
+  </table>
+</div>
+
+<div class="all-responses">
+  Everyone's reponse will be going into this div
+</div>
+
+</html>

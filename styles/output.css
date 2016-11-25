@@ -10,4 +10,17 @@ body {
   .jumbotron img {
     width: 80%; }
 
+.details .date {
+  background-color: black;
+  color: white; }
+.details .time1 {
+  background-color: black;
+  color: white; }
+.details .time2 {
+  background-color: black;
+  color: white; }
+.details .time3 {
+  background-color: black;
+  color: white; }
+
 /*# sourceMappingURL=output.css.map */
