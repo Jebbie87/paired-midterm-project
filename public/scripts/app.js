@@ -11,17 +11,44 @@ const generateUniqueURL = function() {
    return uniqueURL;
 };
 
+const loadMessage = function(){
+
+}
+
+const renderMessages = function(){
+  let output = '';
+}
+
 $(document).ready(function() {
 
-  $('#response').on('submit', function(event) {
-  event.preventDefault();
 
-    // $.post('/events/:uniqueurl', function(data) {
+  $.ajax({
+    url: '/events/uniqueurl',
+    method: 'GET'
+  }).done(function(res){
+    console.log(res)
+  })
 
-    //   console.log(data);
-    // }
+  $('form').on('submit', function(event) {
+    event.preventDefault();
+
+
+
+    $.ajax({
+      url: '/events/uniqueurl',
+      method: "POST",
+      data: $("form").serialize()
+    })
+    .done(function(res) {
+      // console.log(res);
+      // let response = `
+      // ${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}
+      // `
+      // res.message.forEach(function(messages){
+      //   $('body').append(messages);
+      // })
+    });
 
   });
-
 
 });
