@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const waterfall = require('async-waterfall');
 
 module.exports = (knex) => {
 
@@ -15,30 +16,37 @@ module.exports = (knex) => {
     const lastName = req.body.lastName;
     const email = req.body.email;
     const description = req.body.description;
-    const date1 = req.body.date1;
-    const date2 = req.body.date2;
-    const date3 = req.body.date3;
+    const date = req.body.date;
+    const time1 = req.body.time1;
+    const time2 = req.body.time2;
+    const time3 = req.body.time3;
 
     // const uniqueURL =
 
-    knex("events")
+    return knex("events")
       .insert([{title: title, date: date, description: description}])
-      .then(() => {
-        knex("attendees")
-          .insert([{first_name: firstName, last_name: lastName, email: email}])
+      .returning("id")
+      .then((response) => {
+        return knex("event_times")
+            .insert([{times: time1, times: time2, times: time3, event_id: response[0]}])
           .then(() => {
-            console.log("Success brah!");
+            console.log("Events Success!");
             // res.redirect("/uniqueURL")
           })
           .catch((err) => {
             console.log(err);
-          })
-          // .finally(() => {
-          //   knex.destroy();
-          // })
       })
       .then(() => {
-        console.log("Success brah!");
+        console.log("Success!");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
+    knex("attendees")
+      .insert([{first_name: firstName, last_name: lastName, email: email}])
+      .then(() => {
+        console.log("Attendees Success!");
         // res.redirect("/uniqueURL")
       })
       .catch((err) => {
@@ -47,7 +55,8 @@ module.exports = (knex) => {
       // .finally(() => {
       //   knex.destroy();
       // })
-      res.redirect("/");
+    })
+    res.redirect("/");
   })
   return router;
 }

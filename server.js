@@ -13,6 +13,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const waterfall = require('async-waterfall');
 
 // Seperated Routes for each Resource
 const eventsRoutes = require("./routes/events");

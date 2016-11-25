@@ -12,6 +12,8 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.1.4",
+    "async-waterfall": "^0.1.5",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "bootstrap-datepicker": "^1.6.4",
