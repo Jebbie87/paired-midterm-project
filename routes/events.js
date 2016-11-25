@@ -21,42 +21,44 @@ module.exports = (knex) => {
     const time2 = req.body.time2;
     const time3 = req.body.time3;
 
-    // const uniqueURL =
-
-    return knex("events")
-      .insert([{title: title, date: date, description: description}])
-      .returning("id")
-      .then((response) => {
+    waterfall([
+      function(callback){
+        return knex("events")
+          .returning('id')
+          .insert([{title: title, date: date, description: description}])
+          .then(response => callback(null, response))
+          .catch(callback)
+      },
+      function(event_data, callback){
         return knex("event_times")
-            .insert([{times: time1, times: time2, times: time3, event_id: response[0]}])
-          .then(() => {
-            console.log("Events Success!");
-            // res.redirect("/uniqueURL")
-          })
-          .catch((err) => {
-            console.log(err);
-      })
-      .then(() => {
-        console.log("Success!");
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+          .insert([{
+            times: time1,
+            event_id: event_data[0]
+          }, {
+            times: time2,
+            event_id: event_data[0]
+          }, {
+            times: time3,
+            event_id: event_data[0]
+          }])
+          .then(response => callback(null, response))
+          .catch(callback)
+      },
+      function(response, callback){
+        return knex("attendees")
+          .insert([{first_name: firstName, last_name: lastName, email: email}])
+          .then(response => callback(null, 'done'));
+      }
+    ],
+    function (err, result) {
+      if(err){
+        return console.log("Failed to waterfall", err);
+      } else {
+        console.log("Successfull insertion.");
+        res.redirect("/");
+      }
+    });
+  });
 
-    knex("attendees")
-      .insert([{first_name: firstName, last_name: lastName, email: email}])
-      .then(() => {
-        console.log("Attendees Success!");
-        // res.redirect("/uniqueURL")
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      // .finally(() => {
-      //   knex.destroy();
-      // })
-    })
-    res.redirect("/");
-  })
   return router;
 }
