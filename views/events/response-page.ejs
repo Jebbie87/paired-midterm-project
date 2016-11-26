@@ -34,6 +34,8 @@
 
  <body>
 
+<div class="event-name"><%= eventTitle %></div>
+<div class="event-date"><%= eventDate %></div>
 <!-- This is the area where the new user can choose the times they want to go to. Also includes counter -->
 <div id="user-response">
   <table>
@@ -74,6 +76,7 @@
       <br>
       <input class="user-email" type="email" name="user-email">Please enter your email here</input>
       <br>
+      <input type="hidden" name="hiddenURL" value="<%= uniqueurl %>">
       <input class="submit" type="submit" value="submit">
     </div>
 

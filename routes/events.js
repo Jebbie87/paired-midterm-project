@@ -24,6 +24,9 @@ let counter = {
 
 module.exports = (knex) => {
 
+/********************** THIS IS THE GET AND POST REQUEST TO MAKING THE NEW EVENT ********************/
+/********************** ANDREW'S WORK *******************/
+
   router.get("/new", (req, res) => {
     res.render("./events/new")
   })
@@ -76,14 +79,14 @@ module.exports = (knex) => {
       if(err){
         return console.log("Failed to waterfall", err);
       } else {
-        console.log("Successfull insertion.");
-        // alert("Success!");
-        // res.redirect("/");
+        console.log("Successful insertion.");
         res.redirect(`/events/${uniqueURL}`);
       }
     });
   });
 
+/********************** THE GET AND POST REQUEST TO THE UNIQUE URL ***********************/
+/********************** JEFFREY'S WORK **********************/
   // THIS IS THE GET REQUEST TO THE UNIQUE URL
   router.get('/:uniqueurl', (req, res) => {
     let uniqueURL = req.params.uniqueurl;
@@ -91,21 +94,25 @@ module.exports = (knex) => {
       counter1: counter.counter1,
       counter2: counter.counter2,
       counter3: counter.counter3,
-      message: []
+      message: [],
+      uniqueurl: uniqueURL
     };
+    console.log(templateVar)
     knex('attendees')
       .join('response', 'attendees.id', '=', 'response.attendees_id')
       .join('event_times', 'event_times.id', '=', 'response.event_times_id')
       .join('events', 'event_times.id', '=', 'events.id')
       .select()
-      .as('table')
       .where('response.response', '1')
       .then(function(data) {
+        console.log('datea: ', data)
         data.forEach(function(user) {
-          const slicedDate = user.date.toString().slice(0, 15)
-          counter.message.push(`${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}`);
+          const slicedDate = user.date.toString().slice(0, 15);
+          templateVar.message.push(`${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}`);
         })
+
       })
+
 
     knex('events')
       .join('event_times', 'event_times.id', '=', 'events.id')
@@ -113,7 +120,8 @@ module.exports = (knex) => {
       .where('events.uniqueurl', uniqueURL)
       .select()
       .then(function(id){
-
+        templateVar.eventTitle = id[0].title;
+        templateVar.eventDate = id[0].date.toString().slice(0, 15);
         knex('event_times')
           .select('times')
           .where('event_times.event_id', id[0].id)
@@ -121,17 +129,15 @@ module.exports = (knex) => {
             let counter = 0;
             data.forEach(function(time) {
               counter++;
-              templateVar[`pageTime${counter}`] = time.times.slice(1)
-            })
+              templateVar[`pageTime${counter}`] = time.times
+            });
             res.status(200).render('./events/response-page', templateVar);
           })
-        // console.log(templateVar)
       })
-    // res.status(200).render('./events/response-page', templateVar);
   });
 
   // THIS IS THE POST REQUEST TO THE UNIQUE URL
-  router.post('/:uniqueurl', (req, res) => {
+  router.post('/', (req, res) => {
     const time1 = Number(req.body.going1);
     const time2 = Number(req.body.going2);
     const time3 = Number(req.body.going3);
@@ -148,14 +154,17 @@ module.exports = (knex) => {
       .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
       .returning('id')
       .then(function(attendeesID) {
+        console.log(attendeesID)
         let id = Number(attendeesID[0]);
+
         // inserting response and the attendee's id into the response table
         knex('response')
-          .insert([ {response: time1, attendees_id: id}, {response: time2, attendees_id: id}, {response: time3, attendees_id: id} ])
+          .insert([ {response: time1, attendees_id: id},
+            {response: time2, attendees_id: id},
+            {response: time3, attendees_id: id}
+          ])
           .then(function(results) {
-            // console.log("")
             res.json(counter);
-            // console.log(results);
           })
           .catch(function(err) {
             console.log(err);
@@ -164,8 +173,7 @@ module.exports = (knex) => {
       .catch(function(err) {
         console.log(err);
       })
-
-    // res.redirect('/events/uniqueurl');
+    res.redirect(`/events/${req.body.hiddenURL}`);
   });
   return router;
 }
