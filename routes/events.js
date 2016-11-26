@@ -15,6 +15,13 @@ const generateUniqueURL = function() {
    return uniqueURL;
 };
 
+let counter = {
+  counter1: 0,
+  counter2: 0,
+  counter3: 0,
+  message: []
+};
+
 module.exports = (knex) => {
 
   router.get("/new", (req, res) => {
@@ -77,67 +84,88 @@ module.exports = (knex) => {
     });
   });
 
-  const counter = {
-        time1: 0,
-        time2: 0,
-        time3: 0,
-        message: []
-      };
+  // THIS IS THE GET REQUEST TO THE UNIQUE URL
+  router.get('/:uniqueurl', (req, res) => {
+    let uniqueURL = req.params.uniqueurl;
+    let templateVar = {
+      counter1: counter.counter1,
+      counter2: counter.counter2,
+      counter3: counter.counter3,
+      message: []
+    };
+    knex('attendees')
+      .join('response', 'attendees.id', '=', 'response.attendees_id')
+      .join('event_times', 'event_times.id', '=', 'response.event_times_id')
+      .join('events', 'event_times.id', '=', 'events.id')
+      .select()
+      .as('table')
+      .where('response.response', '1')
+      .then(function(data) {
+        data.forEach(function(user) {
+          const slicedDate = user.date.toString().slice(0, 15)
+          counter.message.push(`${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}`);
+        })
+      })
 
-    router.get('/:uniqueurl', (req, res) => {
+    knex('events')
+      .join('event_times', 'event_times.id', '=', 'events.id')
+      .returning('id')
+      .where('events.uniqueurl', uniqueURL)
+      .select()
+      .then(function(id){
 
-      knex('attendees')
-        .join('response', 'attendees.id', '=', 'response.attendees_id')
-        .join('event_times', 'event_times.id', '=', 'response.event_times_id')
-        .join('events', 'event_times.id', '=', 'events.id')
-        .select()
-        .as('table')
-        .where('response.response', '1')
-        .then(function(data) {
-          data.forEach(function(user) {
-            const slicedDate = user.date.toString().slice(0, 15)
-            // slicedDate.slice(0, 15)
-            counter.message.push(`${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}`);
+        knex('event_times')
+          .select('times')
+          .where('event_times.event_id', id[0].id)
+          .then(function(data) {
+            let counter = 0;
+            data.forEach(function(time) {
+              counter++;
+              templateVar[`pageTime${counter}`] = time.times.slice(1)
+            })
+            res.status(200).render('./events/response-page', templateVar);
           })
-          // $('.user-responses')
-        })
-      res.status(200).render('./events/response-page', counter);
-    });
+        // console.log(templateVar)
+      })
+    // res.status(200).render('./events/response-page', templateVar);
+  });
 
-    router.post('/uniqueurl', (req, res) => {
-      const time1 = Number(req.body.going1);
-      const time2 = Number(req.body.going2);
-      const time3 = Number(req.body.going3);
-      const userFirstName = req.body['first-name'];
-      const userLastName = req.body['last-name'];
-      const userEmail = req.body['user-email'];
+  // THIS IS THE POST REQUEST TO THE UNIQUE URL
+  router.post('/:uniqueurl', (req, res) => {
+    const time1 = Number(req.body.going1);
+    const time2 = Number(req.body.going2);
+    const time3 = Number(req.body.going3);
+    const userFirstName = req.body['first-name'];
+    const userLastName = req.body['last-name'];
+    const userEmail = req.body['user-email'];
 
-      counter.time1 += time1;
-      counter.time2 += time2;
-      counter.time3 += time3;
+    counter.counter1 += time1;
+    counter.counter2 += time2;
+    counter.counter3 += time3;
 
-      // inserting the attendee's first name, last name and email into the attendees table
-      knex('attendees')
-        .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
-        .returning('id')
-        .then(function(attendeesID) {
-          let id = Number(attendeesID[0]);
-          // inserting response and the attendee's id into the response table
-          knex('response')
-            .insert([ {response: time1, attendees_id: id}, {response: time2, attendees_id: id}, {response: time3, attendees_id: id} ])
-            .then(function(results) {
-              res.json(counter);
-              // console.log(results);
-            })
-            .catch(function(err) {
-              console.log(err);
-            })
-        })
-        .catch(function(err) {
-          console.log(err);
-        })
+    // inserting the attendee's first name, last name and email into the attendees table
+    knex('attendees')
+      .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
+      .returning('id')
+      .then(function(attendeesID) {
+        let id = Number(attendeesID[0]);
+        // inserting response and the attendee's id into the response table
+        knex('response')
+          .insert([ {response: time1, attendees_id: id}, {response: time2, attendees_id: id}, {response: time3, attendees_id: id} ])
+          .then(function(results) {
+            // console.log("")
+            res.json(counter);
+            // console.log(results);
+          })
+          .catch(function(err) {
+            console.log(err);
+          })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
 
-      // res.redirect('/events/uniqueurl');
-    });
+    // res.redirect('/events/uniqueurl');
+  });
   return router;
 }

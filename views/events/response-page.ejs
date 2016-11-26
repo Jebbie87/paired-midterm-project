@@ -21,7 +21,7 @@
     <!-- Custom styles for this template -->
     <!-- <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" /> -->
 
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/output.css" type="text/css" />
 
     <link rel="stylesheet" href="/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
 
@@ -38,10 +38,10 @@
 <div id="user-response">
   <table>
 
-  <form id="response-time1" action="/events/uniqueurl" method="POST">
+  <form id="response-time1" action="/events/:uniqueurl" method="POST">
     <tr>
       <div class="time1">
-        <%= eventTime1 %>
+        <%= pageTime1 %>
         <input class="yes" type="radio" name="going1" value="1">YES</input>
         <input class="no" type="radio" name="going1" value="0">NO</input>
         <%= counter1 %> people are going in this time slot!
@@ -50,8 +50,7 @@
 
     <tr>
       <div class="time2">
-
-        4:00 PM
+        <%= pageTime2 %>
         <input class="yes" type="radio" name="going2" value="1">YES</input>
         <input class="no" type="radio" name="going2" value="0">NO</input>
         <%= counter2 %> people are going in this time slot!
@@ -60,7 +59,7 @@
 
     <tr>
       <div class="time3">
-        6:00 PM
+        <%= pageTime3 %>
         <input class="yes" type="radio" name="going3" value="1">YES</input>
         <input class="no" type="radio" name="going3" value="0">NO</input>
         <%= counter3 %> people are going in this time slot!
