@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<% include ../partials/_header.ejs %>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>Schoodle Login</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Custom styles for this template -->
+  <!-- <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" /> -->
+  <link rel="stylesheet" href="/styles/login.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/new-event.css" type="text/css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script> -->
+  <!--Eonasdan/bootstrap-datetimepicker requirements-->
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="/scripts/login.js" ></script>
+</head>
+<body>
+  <div class="container">
+  	<div class="row">
+
+  <!-- Mixins-->
+  <!-- Pen Title-->
+  <div class="pen-title">
+    <h1>Material Login Form</h1>
+  </div>
+  <div class="container">
+    <div class="card"></div>
+    <div class="card">
+      <h1 class="title">Login</h1>
+      <form>
+        <div class="input-container">
+          <input type="text" id="firstName" required="required" name="firstName"/>
+          <label for="firstName">First Name</label>
+          <div class="bar"></div>
+        </div>
+        <div class="input-container">
+          <input type="text" id="lastName" required="required" name="lastName"/>
+          <label for="lastName">Last Name</label>
+          <div class="bar"></div>
+        </div>
+        <div class="input-container">
+          <input type="email" id="email" required="required" name="email"/>
+          <label for="Email">Email</label>
+          <div class="bar"></div>
+        </div>
+        <div class="button-container">
+          <button><span>Go</span></button>
+        </div>
+        <div class="footer"><a href="#">Forgot your password?</a></div>
+      </form>
+    </div>
+    <div class="card alt">
+      <div class="toggle"></div>
+      <h1 class="title">Register
+        <div class="close"></div>
+      </h1>
+      <form>
+        <div class="input-container">
+          <input type="text" id="firstName" required="required"/>
+          <label for="firstName">First Name</label>
+          <div class="bar"></div>
+        </div>
+        <div class="input-container">
+          <input type="text" id="lastName" required="required"/>
+          <label for="lastName">Last Name</label>
+          <div class="bar"></div>
+        </div>
+        <div class="input-container">
+          <input type="password" id="Password" required="required"/>
+          <label for="Password">Password</label>
+          <div class="bar"></div>
+        </div>
+        <div class="input-container">
+          <input type="password" id="Repeat Password" required="required"/>
+          <label for="Repeat Password">Repeat Password</label>
+          <div class="bar"></div>
+        </div>
+        <div class="button-container">
+          <button><span>Next</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Portfolio--><a id="portfolio" href="/" title="View my portfolio!"><i class="fa fa-link"></i></a>
+  	</div>
+  </div>
+</body>
+</html>

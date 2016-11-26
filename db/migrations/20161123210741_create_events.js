@@ -7,6 +7,8 @@ exports.up = function(knex, Promise) {
       table.date("date");
       table.string("description");
       table.string("uniqueurl");
+      table.integer("attendees_id").unsigned();
+      table.foreign("attendees_id").references("attendees.id");
     })
   ])
 };
