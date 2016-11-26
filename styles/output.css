@@ -10,17 +10,16 @@ body {
   .jumbotron img {
     width: 80%; }
 
-.details .date {
-  background-color: black;
-  color: white; }
-.details .time1 {
-  background-color: black;
-  color: white; }
-.details .time2 {
-  background-color: black;
-  color: white; }
-.details .time3 {
-  background-color: black;
-  color: white; }
+#user-response {
+  background-color: black; }
+  #user-response .time1 input {
+    margin-left: 2em; }
+  #user-response + .input + .input {
+    margin-left: 2em; }
+  #user-response + .input + .input + .input {
+    margin-left: 2em; }
+
+.time1 > input {
+  margin-left: 2em; }
 
 /*# sourceMappingURL=output.css.map */

@@ -21,15 +21,16 @@ const renderMessages = function(){
 }
 
 $(document).ready(function() {
+
 const loadMessage = function(){
 
 }
 
   $.ajax({
-    url: '/events/uniqueurl',
+    url: '/events/uniqueurl/json',
     method: 'GET'
   }).done(function(res){
-    console.log(res)
+    console.log(res.messages)
   })
 
   $('form').on('submit', function(event) {
@@ -38,18 +39,13 @@ const loadMessage = function(){
 
 
     $.ajax({
-      url: '/events/uniqueurl',
+      url: '/events',
       method: "POST",
       data: $("form").serialize()
     })
     .done(function(res) {
-      // console.log(res);
-      // let response = `
-      // ${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}
-      // `
-      // res.message.forEach(function(messages){
-      //   $('body').append(messages);
-      // })
+
+      console.log("ajax: ", JSON.stringify(res));
     });
 
   });

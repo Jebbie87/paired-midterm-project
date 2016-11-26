@@ -1,7 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.createTable("events", function(table){
+    return knex.schema.createTable("events", function(table){
       table.increments();
       table.string("title");
       table.date("date");
@@ -11,10 +10,7 @@ exports.up = function(knex, Promise) {
       table.foreign("attendees_id").references("attendees.id");
     })
   ])
-};
 
 exports.down = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.dropTable("events")
-  ])
+    return knex.schema.dropTable("events")
 };

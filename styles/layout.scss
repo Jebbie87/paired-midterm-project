@@ -16,24 +16,36 @@ body {
     }
 }
 
-.details {
-  .date {
-    background-color: black;
-    color: white;
+#user-response {
+  background-color: black;
+
+  .time1 input {
+    margin-left: 2em;
   }
 
-  .time1 {
-    background-color: black;
-    color: white;
+  + .input + .input {
+    margin-left: 2em;
   }
 
-  .time2 {
-    background-color: black;
-    color: white;
+  + .input + .input + .input {
+    margin-left: 2em;
+  }
+}
+
+.time1 > input {
+  margin-left: 2em;
+}
+
+.user-info {
+  .first-name {
+
   }
 
-  .time3 {
-    background-color: black;
-    color: white;
+  .last-name {
+
+  }
+
+  .user-email {
+
   }
 }

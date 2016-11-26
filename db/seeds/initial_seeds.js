@@ -15,9 +15,9 @@ exports.seed = function(knex, Promise) {
             .then(function () {
               return knex
                 .insert([
-                  {title: 'party', date: '2016-02-01', description: 'asdfasdf'},
-                  {title: 'drinks', date: '2018-01-01', description: 'qwerqwer'},
-                  {title: 'birthday', date: '2017-01-01', description: 'zxcvzxcv'}
+                  {title: 'party', date: '2016-02-01', description: 'asdfasdf', uniqueurl: '0ZxaO9HtfEhV0Lhqcx9B'},
+                  {title: 'drinks', date: '2018-01-01', description: 'qwerqwer', uniqueurl: 'drinksuniqueurl'},
+                  {title: 'birthday', date: '2017-01-01', description: 'zxcvzxcv', uniqueurl: 'birthdayuniqueurl'}
                 ])
                 .into('events')
                 .returning('id')
@@ -26,9 +26,9 @@ exports.seed = function(knex, Promise) {
                     .then(function() {
                       return knex
                         .insert([
-                          {times: '1:00', event_id: 1},
-                          {times: '3:00', event_id: 3},
-                          {times: '6:00', event_id: 2}
+                          {times: '1:00'},
+                          {times: '3:00'},
+                          {times: '6:00'}
                         ])
                         .into('event_times')
                         .returning('id')
