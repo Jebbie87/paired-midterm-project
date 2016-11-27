@@ -101,7 +101,7 @@ module.exports = (knex) => {
         return knex("events")
           .returning("id")
           .insert([{title: title, date: date, description: description, uniqueurl: uniqueURL, attendees_id: attendees_data[0]}])
-          .then(response => callback(null, response))
+          .then(response => callback(null, [response, attendees_data]))
           .catch(callback)
       },
       //This function inserts data into the event_times table.
@@ -109,16 +109,33 @@ module.exports = (knex) => {
         return knex("event_times")
           .insert([{
             times: time1,
-            event_id: event_data[0]
+            event_id: event_data[0][0]
           }, {
             times: time2,
-            event_id: event_data[0]
+            event_id: event_data[0][0]
           }, {
             times: time3,
-            event_id: event_data[0]
+            event_id: event_data[0][0]
+          }])
+          .then(response => callback(null, [response, event_data[1]]))
+      },
+      function(eventTimesData, callback){
+        return knex("response")
+          .insert([{
+            response: 1,
+            attendees_id: eventTimesData[1][0],
+            event_times_id: eventTimesData[0][0]
+          }, {
+            response: 1,
+            attendees_id: eventTimesData[1][0],
+            event_times_id: eventTimesData[0][1]
+          }, {
+            response: 1,
+            attendees_id: eventTimesData[1][0],
+            event_times_id: eventTimesData[0][2]
           }])
           .then(response => callback(null, "done"))
-      }
+      },
     ],
     function (err, result) {
       if(err){
@@ -182,6 +199,9 @@ module.exports = (knex) => {
       uniqueurl: uniqueURL
     };
     console.log(templateVar)
+    
+
+
     knex('attendees')
       .join('response', 'attendees.id', '=', 'response.attendees_id')
       .join('event_times', 'event_times.id', '=', 'response.event_times_id')
