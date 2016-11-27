@@ -70,6 +70,7 @@ module.exports = (knex) => {
           .then(response => callback(null, [response, event_data[1]]))
           .catch(callback)
       },
+      //This updates the database with the responses.
       function(eventTimesData, callback){
         const attendeeID = eventTimesData[1][0];
         const eventTimesID = eventTimesData[0];
