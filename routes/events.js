@@ -7,7 +7,6 @@ const waterfall = require('async-waterfall');
 const generateUniqueURL = function() {
   const alphaNumeric = '01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   let uniqueURL = '';
-
   for (var i = 0; i < 20; i++) {
     const randomNum = Math.floor((Math.random() * 63));
     uniqueURL += alphaNumeric.charAt(randomNum);
@@ -15,10 +14,50 @@ const generateUniqueURL = function() {
   return uniqueURL;
 };
 
+const checkUser = function(result) {
+    if (result.length >= 1) {
+     return true;
+   }
+ }
 module.exports = (knex) => {
 
-/********************** THIS IS THE GET AND POST REQUEST TO MAKING THE NEW EVENT ********************/
+  router.get("/login", (req, res) => {
+    res.status(200).render("./events/login")
+  })
 
+ router.post("/login", (req, res) => {
+   const firstName = req.body.firstName;
+   const lastName = req.body.lastName;
+   const email = req.body.email;
+   knex("attendees")
+     .select()
+     .where({first_name: firstName, last_name: lastName, email: email})
+     .then (function(data) {
+         if (!checkUser(data)) {
+           throw new Error("User not found")
+       }
+       return data
+     })
+    .then((attendees) => {
+      knex("attendees")
+      .join("events", "attendees.id", "=", "events.attendees_id")
+      .select("uniqueurl")
+      .then (function(uniqueurl) {
+        console.log(uniqueurl[0].uniqueurl);
+        console.log("Successful login");
+        res.redirect(`/events/${uniqueurl[0].uniqueurl}`);
+      })
+   })
+   .catch(function(err) {
+     res.status(401).send(err.message);
+   })
+      // if (verifyUser(firstName, lastName, email, data) {
+      //   res.redirect("/");
+      // } else {
+    //   res.status(401).send("Check to see if your email and password are correct.");
+    // };
+   });
+/********************* THIS IS THE GET AND POST REQUEST TO MAKING THE NEW EVENT ********************/
   router.get("/new", (req, res) => {
     res.render("./events/new")
   })
@@ -68,7 +107,6 @@ module.exports = (knex) => {
             event_id: eventID
           }])
           .then(response => callback(null, [response, event_data[1]]))
-          .catch(callback)
       },
       //This updates the database with the responses.
       function(eventTimesData, callback){
@@ -100,6 +138,5 @@ module.exports = (knex) => {
       }
     });
   });
-
   return router;
 }
