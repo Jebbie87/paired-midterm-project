@@ -12,21 +12,8 @@ const generateUniqueURL = function() {
     const randomNum = Math.floor((Math.random() * 63));
     uniqueURL += alphaNumeric.charAt(randomNum);
   };
-   return uniqueURL;
+  return uniqueURL;
 };
-const checkUser = function(result) {
-  if (result.length > 1) {
-    return true;
-  }
-}
-// const verifyUser = function (firstName, lastName, email, db) {
-//   let areTheyRegistered = false;
-//   db.forEach(function() {
-//     if (firstName === attendeesDB[0].first_name && lastName === attendeesDB[0].last_name && email === attendeesDB[0].email)
-//         areTheyRegistered = true;
-//   })
-//   return areTheyRegistered;
-// };
 
 let counter = {
   counter1: 0,
@@ -37,44 +24,86 @@ let counter = {
 
 module.exports = (knex) => {
 
-<<<<<<< HEAD
-  router.get("/login", (req, res) => {
-    res.status(200).render("./events/login")
+const newUserReponse = function() {
+    waterfall([
+    // THIS WILL GET THE TABLE OF THE CURRENT EVENT
+    function(callback) {
+      return knex('events')
+        .select()
+        .where('events.uniqueurl', req.body.hiddenURL)
+        .then((response) => callback(null, response))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE ATTENDEE INFORMATION AND SEND ATTENDEE ID DOWN TO THE NEXT FUNCTION
+    function(eventsData, callback) {
+      return knex('attendees')
+        .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
+        .returning('id')
+        .then((response) => callback(null, [response, eventsData]))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE CURRENT EVENTS INFORMATION AND SEND THE EVENT ID AND ATTENDEE ID DOWN TO THE NEXT FUNCTION
+    function(attendeeID, callback){
+      const eventData = attendeeID[1][0];
+      return knex('events')
+        .insert([ {title: eventData.title,
+          date: eventData.date.toString().slice(0, 15),
+          description: eventData.description,
+          uniqueurl: eventData.uniqueurl,
+          attendees_id: attendeeID[0][0]}
+        ])
+        .returning('id')
+        .then((response) => callback(null, [response, attendeeID[0]]))
+        .catch(callback)
+    },
+    // THIS WILL JOIN THE EVENT TIMES TABLE AND THE EVENTS TABLE JUST TO GET THE TIMES OF THE EVENTS
+    // ALSO SENDS THE ATTENDEE ID AND EVENT ID DOWN TO THE NEXT FUNCTION
+    function(eventTimesJoiningEvents, callback){
+      return knex('event_times')
+        .join('events', 'events.id', '=', 'event_times.event_id')
+        .select('times')
+        .then((response) => callback(null, [response, eventTimesJoiningEvents]))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE TIME AND THE EVENT ID INTO THE EVENT TIMES TABLE
+    // ALSO SENDS THE ATTENDEE ID AND THE EVENT TIMES ID DOWN TO THE NEXT FUNCTION
+    function(timesIntoEventTimes, callback){
+      const eventsID = timesIntoEventTimes[1][0][0];
+      const eventTimes = timesIntoEventTimes[0];
+      return knex('event_times')
+        .insert([ {times: eventTimes[0].times, event_id: eventsID},
+          {times: eventTimes[1].times, event_id: eventsID},
+          {times: eventTimes[2].times, event_id: eventsID}
+        ])
+        .returning('id')
+        .then((response) => callback(null, [response, timesIntoEventTimes[1][1][0]] ))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE USER RESPONSE AND REFERENCE THE EVENT TIMES ID AND ATTENDEE ID
+    function(userResponse, callback){
+      const eventTimesID = userResponse[0];
+      return knex('response')
+        .insert([ {response: going1, attendees_id: userResponse[1], event_times_id: eventTimesID[0]},
+          {response: going2, attendees_id: userResponse[1], event_times_id: eventTimesID[1]},
+          {response: going3, attendees_id: userResponse[1], event_times_id: eventTimesID[1]}
+        ])
+        .then((response) => callback(null, "done"))
+    }
+  ],
+  function(err, result){
+    if (err){
+      console.log("Failed to insert to waterfall!");
+    } else {
+      console.log("Successful insert into waterfall!");
+    }
   })
+}
 
-  router.post("/login", (req, res) => {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    knex("attendees")
-      .select()
-      .where({first_name: firstName, last_name: lastName, email: email})
-      .then (function(data) {
-          if (!checkUser(data)) {
-            throw new Error("User not found")
-          }
-          return data
-        })
-        .then((user) => {
-          knec("events")// join grab event data        })
-
-          return url;
-          console.log("Successful login");
-          res.redirect("/uniqueURL");
-      })
-      .catch(function(err) {
-        res.status(401).send(err.message);
-      })
-    // if (verifyUser(firstName, lastName, email, data) {
-    //   res.redirect("/");
-    // } else {
-    //   res.status(401).send("Check to see if your email and password are correct.");
-    // };
-  });
 /********************** THIS IS THE GET AND POST REQUEST TO MAKING THE NEW EVENT ********************/
 /********************** ANDREW'S WORK *******************/
+
   router.get("/new", (req, res) => {
-    res.status(200).render("./events/new")
+    res.render("./events/new")
   })
 
   router.post("/new", (req, res) => {
@@ -103,30 +132,43 @@ module.exports = (knex) => {
         return knex("events")
           .returning("id")
           .insert([{title: title, date: date, description: description, uniqueurl: uniqueURL, attendees_id: attendees_data[0]}])
-          .then(response => callback(null, response))
+          .then(response => callback(null, [response, attendees_data]))
           .catch(callback)
       },
       //This function inserts data into the event_times table.
       function(event_data, callback){
         return knex("event_times")
+          .returning("id")
           .insert([{
             times: time1,
-            event_id: event_data[0]
+            event_id: event_data[0][0]
           }, {
             times: time2,
-            event_id: event_data[0]
+            event_id: event_data[0][0]
           }, {
             times: time3,
-            event_id: event_data[0]
+            event_id: event_data[0][0]
+          }])
+          .then(response => callback(null, [response, event_data[1]]))
+          .catch(callback)
+      },
+      function(eventTimesData, callback){
+        return knex("response")
+          .insert([{
+            response: 1,
+            attendees_id: eventTimesData[1][0],
+            event_times_id: eventTimesData[0][0]
+          }, {
+            response: 1,
+            attendees_id: eventTimesData[1][0],
+            event_times_id: eventTimesData[0][1]
+          }, {
+            response: 1,
+            attendees_id: eventTimesData[1][0],
+            event_times_id: eventTimesData[0][2]
           }])
           .then(response => callback(null, "done"))
       },
-      // THIS FUNCTION PUSHES DATA INTO ATTENDEES TABLE
-      function(response, callback){
-        return knex("attendees")
-          .insert([{first_name: firstName, last_name: lastName, email: email}])
-          .then(response => callback(null, 'done'));
-      }
     ],
     function (err, result) {
       if(err){
@@ -138,67 +180,6 @@ module.exports = (knex) => {
     });
   });
 
-  const counter = {
-    time1: 0,
-    time2: 0,
-    time3: 0,
-    message: []
-  };
-
-  router.get("/:uniqueurl", (req, res) => {
-    knex("attendees")
-      .join('response', 'attendees.id', '=', 'response.attendees_id')
-      .join('event_times', 'event_times.id', '=', 'response.event_times_id')
-      .join('events', 'event_times.id', '=', 'events.id')
-      .select()
-      .as('table')
-      .where('response.response', '1')
-      .then(function(data) {
-        data.forEach(function(user) {
-          const slicedDate = user.date.toString().slice(0, 15)
-          // slicedDate.slice(0, 15)
-          counter.message.push(`${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}`);
-        })
-        // $('.user-responses')
-      })
-    res.status(200).render('./events/response-page', counter);
-  });
-
-  router.post("/:uniqueurl", (req, res) => {
-    const time1 = Number(req.body.going1);
-    const time2 = Number(req.body.going2);
-    const time3 = Number(req.body.going3);
-    const userFirstName = req.body['first-name'];
-    const userLastName = req.body['last-name'];
-    const userEmail = req.body['user-email'];
-
-    counter.time1 += time1;
-    counter.time2 += time2;
-    counter.time3 += time3;
-
-    // inserting the attendee's first name, last name and email into the attendees table
-    knex("attendees")
-      .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
-      .returning('id')
-      .then(function(attendeesID) {
-        let id = Number(attendeesID[0]);
-        // inserting response and the attendee's id into the response table
-        knex('response')
-          .insert([ {response: time1, attendees_id: id}, {response: time2, attendees_id: id}, {response: time3, attendees_id: id} ])
-          .then(function(results) {
-            res.json(counter);
-            // console.log(results);
-          })
-          .catch(function(err) {
-            console.log(err);
-          })
-      })
-      .catch(function(err) {
-        console.log(err);
-      })
-
-    // res.redirect('/events/uniqueurl');
-    });
 /********************** THE GET AND POST REQUEST TO THE UNIQUE URL ***********************/
 /********************** JEFFREY'S WORK **********************/
   // THIS IS THE GET REQUEST TO THE UNIQUE URL
@@ -211,7 +192,7 @@ module.exports = (knex) => {
       message: [],
       uniqueurl: uniqueURL
     };
-    console.log(templateVar)
+    // console.log(templateVar)
     knex('attendees')
       .join('response', 'attendees.id', '=', 'response.attendees_id')
       .join('event_times', 'event_times.id', '=', 'response.event_times_id')
@@ -219,13 +200,13 @@ module.exports = (knex) => {
       .select()
       .where('response.response', '1')
       .then(function(data) {
-        console.log('datea: ', data)
+        // console.log('datea: ', data)
         data.forEach(function(user) {
           const slicedDate = user.date.toString().slice(0, 15);
           templateVar.message.push(`${user.first_name} ${user.last_name} will be attending ${user.title} on ${slicedDate} at ${user.times}`);
         })
-
       })
+
 
     knex('events')
       .join('event_times', 'event_times.id', '=', 'events.id')
@@ -233,6 +214,7 @@ module.exports = (knex) => {
       .where('events.uniqueurl', uniqueURL)
       .select()
       .then(function(id){
+        // console.log("events id: ", id)
         templateVar.eventTitle = id[0].title;
         templateVar.eventDate = id[0].date.toString().slice(0, 15);
         knex('event_times')
@@ -244,49 +226,98 @@ module.exports = (knex) => {
               counter++;
               templateVar[`pageTime${counter}`] = time.times
             });
-            res.status(200).render('./events/response-page', templateVar);
+            res.render('./events/response-page', templateVar);
           })
       })
   });
 
   // THIS IS THE POST REQUEST TO THE UNIQUE URL
   router.post('/', (req, res) => {
-    const time1 = Number(req.body.going1);
-    const time2 = Number(req.body.going2);
-    const time3 = Number(req.body.going3);
+    const going1 = Number(req.body.going1);
+    const going2 = Number(req.body.going2);
+    const going3 = Number(req.body.going3);
     const userFirstName = req.body['first-name'];
     const userLastName = req.body['last-name'];
     const userEmail = req.body['user-email'];
 
-    counter.counter1 += time1;
-    counter.counter2 += time2;
-    counter.counter3 += time3;
+    counter.counter1 += going1;
+    counter.counter2 += going2;
+    counter.counter3 += going3;
 
-    // inserting the attendee's first name, last name and email into the attendees table
-    knex('attendees')
-      .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
-      .returning('id')
-      .then(function(attendeesID) {
-        console.log(attendeesID)
-        let id = Number(attendeesID[0]);
+    waterfall([
+    // THIS WILL GET THE TABLE OF THE CURRENT EVENT
+    function(callback) {
+      return knex('events')
+        .select()
+        .where('events.uniqueurl', req.body.hiddenURL)
+        .then((response) => callback(null, response))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE ATTENDEE INFORMATION AND SEND ATTENDEE ID DOWN TO THE NEXT FUNCTION
+    function(eventsData, callback) {
+      return knex('attendees')
+        .insert([ {first_name: userFirstName, last_name: userLastName, email: userEmail} ])
+        .returning('id')
+        .then((response) => callback(null, [response, eventsData]))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE CURRENT EVENTS INFORMATION AND SEND THE EVENT ID AND ATTENDEE ID DOWN TO THE NEXT FUNCTION
+    function(attendeeID, callback){
+      const eventData = attendeeID[1][0];
+      return knex('events')
+        .insert([ {title: eventData.title,
+          date: eventData.date.toString().slice(0, 15),
+          description: eventData.description,
+          uniqueurl: eventData.uniqueurl,
+          attendees_id: attendeeID[0][0]}
+        ])
+        .returning('id')
+        .then((response) => callback(null, [response, attendeeID[0]]))
+        .catch(callback)
+    },
+    // THIS WILL JOIN THE EVENT TIMES TABLE AND THE EVENTS TABLE JUST TO GET THE TIMES OF THE EVENTS
+    // ALSO SENDS THE ATTENDEE ID AND EVENT ID DOWN TO THE NEXT FUNCTION
+    function(eventTimesJoiningEvents, callback){
+      return knex('event_times')
+        .join('events', 'events.id', '=', 'event_times.event_id')
+        .select('times')
+        .then((response) => callback(null, [response, eventTimesJoiningEvents]))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE TIME AND THE EVENT ID INTO THE EVENT TIMES TABLE
+    // ALSO SENDS THE ATTENDEE ID AND THE EVENT TIMES ID DOWN TO THE NEXT FUNCTION
+    function(timesIntoEventTimes, callback){
+      const eventsID = timesIntoEventTimes[1][0][0];
+      const eventTimes = timesIntoEventTimes[0];
+      return knex('event_times')
+        .insert([ {times: eventTimes[0].times, event_id: eventsID},
+          {times: eventTimes[1].times, event_id: eventsID},
+          {times: eventTimes[2].times, event_id: eventsID}
+        ])
+        .returning('id')
+        .then((response) => callback(null, [response, timesIntoEventTimes[1][1][0]] ))
+        .catch(callback)
+    },
+    // THIS WILL INSERT THE USER RESPONSE AND REFERENCE THE EVENT TIMES ID AND ATTENDEE ID
+    function(userResponse, callback){
+      const eventTimesID = userResponse[0];
+      return knex('response')
+        .insert([ {response: going1, attendees_id: userResponse[1], event_times_id: eventTimesID[0]},
+          {response: going2, attendees_id: userResponse[1], event_times_id: eventTimesID[1]},
+          {response: going3, attendees_id: userResponse[1], event_times_id: eventTimesID[1]}
+        ])
+        .then((response) => callback(null, "done"))
+    }
+  ],
+  function(err, result){
+    if (err){
+      console.log("Failed to insert to waterfall!");
+    } else {
+      console.log("Successful insert into waterfall!");
+    }
+  })
 
-        // inserting response and the attendee's id into the response table
-        knex('response')
-          .insert([ {response: time1, attendees_id: id},
-            {response: time2, attendees_id: id},
-            {response: time3, attendees_id: id}
-          ])
-          .then(function(results) {
-            res.json(counter);
-          })
-          .catch(function(err) {
-            console.log(err);
-          })
-      })
-      .catch(function(err) {
-        console.log(err);
-      })
-    res.redirect(`/events/${req.body.hiddenURL}`);
+  res.redirect(`/`);
   });
   return router;
 }
