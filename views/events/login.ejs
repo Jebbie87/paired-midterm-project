@@ -39,35 +39,35 @@
   <!-- Mixins-->
   <!-- Pen Title-->
   <div class="pen-title">
-    <h1>Material Login Form</h1>
+    <!-- <h1>Login</h1> -->
   </div>
-  <div class="container">
+  <div class="container form-group">
     <div class="card"></div>
     <div class="card">
       <h1 class="title">Login</h1>
-      <form>
+      <form action="/events/login" method="post">
         <div class="input-container">
-          <input type="text" id="firstName" required="required" name="firstName"/>
+          <input type="text" required="required" name="firstName" class="form control">
           <label for="firstName">First Name</label>
           <div class="bar"></div>
         </div>
         <div class="input-container">
-          <input type="text" id="lastName" required="required" name="lastName"/>
+          <input type="text" required="required" name="lastName" class="form control">
           <label for="lastName">Last Name</label>
           <div class="bar"></div>
         </div>
         <div class="input-container">
-          <input type="email" id="email" required="required" name="email"/>
-          <label for="Email">Email</label>
+          <input type="email" required="required" name="email" class="form control">
+          <label for="email">Email</label>
           <div class="bar"></div>
         </div>
         <div class="button-container">
-          <button><span>Go</span></button>
+          <button type="submit"><span>Go</span></button>
         </div>
-        <div class="footer"><a href="#">Forgot your password?</a></div>
+        <!-- <div class="footer"><a href="#">Forgot your password?</a></div> -->
       </form>
     </div>
-    <div class="card alt">
+    <!-- <div class="card alt">
       <div class="toggle"></div>
       <h1 class="title">Register
         <div class="close"></div>
@@ -92,10 +92,10 @@
           <input type="password" id="Repeat Password" required="required"/>
           <label for="Repeat Password">Repeat Password</label>
           <div class="bar"></div>
-        </div>
-        <div class="button-container">
+        </div> -->
+        <!-- <div class="button-container">
           <button><span>Next</span></button>
-        </div>
+        </div> -->
       </form>
     </div>
   </div>
