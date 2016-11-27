@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
       table.integer("attendees_id").unsigned();
       table.foreign("attendees_id").references("attendees.id");
     })
-  ])
+};
 
 exports.down = function(knex, Promise) {
     return knex.schema.dropTable("events")
