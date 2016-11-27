@@ -33,20 +33,20 @@ const loadMessage = function(){
     console.log(res.messages)
   })
 
-  $('form').on('submit', function(event) {
-    event.preventDefault();
+  // $('form').on('submit', function(event) {
+  //   event.preventDefault();
 
 
 
-    $.ajax({
-      url: '/events',
-      method: "POST",
-      data: $("form").serialize()
-    })
-    .done(function(res) {
+  //   $.ajax({
+  //     url: '/events',
+  //     method: "POST",
+  //     data: $("form").serialize()
+  //   })
+  //   .done(function(res) {
 
-      console.log("ajax: ", JSON.stringify(res));
-    });
+  //     // console.log("ajax: ", JSON.stringify(res));
+  //   });
 
   });
 

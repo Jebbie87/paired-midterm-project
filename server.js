@@ -17,8 +17,8 @@ const waterfall   = require('async-waterfall');
 
 // Seperated Routes for each Resource
 // const usersRoutes = require("./routes/users");
-// const responseRoutes = require("./routes/events-response");
 const eventsRoutes = require("./routes/events");
+const responseRoutes = require("./routes/events-response");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -39,8 +39,8 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-// app.use("/events", responseRoutes(knex));
 app.use("/events", eventsRoutes(knex));
+app.use("/events", responseRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
