@@ -11,6 +11,19 @@ let counter = {
   counter3: 0,
   message: []
 };
+
+const checkUser = function(result) {
+    if (result.length >= 1) {
+     return true;
+   }
+ }
+
+ const checkCorrectURL = function(result) {
+   if (result.length >= 1) {
+    return true;
+  }
+}
+
 module.exports = (knex) => {
 
   router.get('/:uniqueurl', (req, res) => {
@@ -71,6 +84,7 @@ module.exports = (knex) => {
     .where('events.uniqueurl', uniqueURL)
     .select()
     .then(function(id){
+      templateVar.description = id[0].description;
       templateVar.eventTitle = id[0].title;
       templateVar.eventDate = id[0].date.toString().slice(0, 15);
       knex('event_times')
@@ -89,21 +103,68 @@ module.exports = (knex) => {
   });
 
   // THIS IS THE POST REQUEST TO THE UNIQUE URL
-  router.post('/:unique', (req, res) => {
-    console.log('Here we are looking at the form data');
+  router.post('/:uniqueurl', (req, res) => {
     const going1 = Number(req.body.going1);
     const going2 = Number(req.body.going2);
     const going3 = Number(req.body.going3);
-    const userFirstName = req.body['first-name'];
-    const userLastName = req.body['last-name'];
-    const userEmail = req.body['user-email'];
+    const userFirstName = req.body["first-name"];
+    const userLastName = req.body["last-name"];
+    const userEmail = req.body["user-email"];
+
+
+      knex("attendees")
+        .select()
+        .where({first_name: userFirstName, last_name: userLastName, email: userEmail})
+        .then ((data) => {
+            const id = data[0].id
+            if (!checkUser(data)) {
+              // throw new Error("User not found")
+          }
+          return id
+        })
+       .then((attendeeID) => {
+         console.log("THIS IS THE ATTENDEE ID", attendeeID);
+         knex("attendees")
+        //  .join("events", "attendees.id", "=", "events.attendees_id")
+        .fullOuterJoin("response", "attendees.id", "=", "response.attendees_id")
+         .fullOuterJoin("event_times", "response.event_times_id", "=", "event_times.event_id")
+         .select()
+         .where("attendees.id", attendeeID)
+         .then ((attendeeData) => {
+            console.log("THIS IS THE DATA AFTER ALL OF THE JOINS", attendeeData);
+            console.log("THIS IS THE DATA AFTER ALL OF THE JOINS 1", attendeeData[0]);
+            console.log("THIS IS THE DATA AFTER ALL OF THE JOINS 2", attendeeData[0].times);
+            console.log("THIS IS THE DATA AFTER ALL OF THE JOINS 3", attendeeData[0].event_id);
+
+            return attendeeData;
+         })
+        //  .then((attendeeData) => {
+        //    console.log("THIS IS THE DATA AFTER ALL OF THE JOINS 4", attendeeData);
+        //    knex("event_times")
+        //    .select()
+        //    .where({times: attendeeData[0].times, event_id: attendeeData[0].event_id})
+        //    .then ((data) => {
+        //      console.log("THIS IS THE DATA BEFORE UPDATE", data)
+        //       return data;
+        //    })
+        //  })
+         .then((data) => {
+           console.log("THIS IS DATA FOR UPDATE", data)
+            knex("response")
+            .where({attendees_id: data[0].id, event_times_id: data[0]["event_times_id"]})
+            .update({response: going1})
+            .then(function(whatIsThis) {
+              return whatIsThis;
+           })
+         })
+      })
 
     waterfall([
     // THIS WILL GET THE TABLE OF THE CURRENT EVENT
     function(callback) {
       return knex('events')
         .select()
-        .where('events.uniqueurl', req.body.hiddenURL)
+        .where('events.uniqueurl', req.params.uniqueurl)
         .then((response) => callback(null, response))
         .catch(callback)
     },
@@ -177,7 +238,7 @@ module.exports = (knex) => {
       console.log("Failed to insert to waterfall!");
     } else {
       console.log("Successful insert into waterfall!");
-      res.redirect(`/events/${req.params.unique}`);
+      res.redirect(`/events/${req.params.uniqueurl}`);
     }
   })
   });
