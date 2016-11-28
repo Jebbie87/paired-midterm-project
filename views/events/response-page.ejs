@@ -62,6 +62,43 @@
         <div role="tabpanel" class="tab-pane" id="messages"><%= description %></div>
         <div role="tabpanel" class="tab-pane" id="settings"></div>
     </div>
+ <body>
+   <h1><div class="event-name"><%= eventTitle %></div></h1>
+   <h1><div class="event-date"><%= eventDate %></div></h1>
+
+   <div id="user-response" class="voting">
+   <form id="response-time1" action="/events/:uniqueurl" method="POST">
+   <div class="container">
+       <div class="row">
+           <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+               <div class="row">
+                   <div class="col-xs-4 my_planHeader my_plan1">
+                        <div class="time1">
+                           <div class="my_planTitle"><%= pageTime1 %></div>
+                            <a type="button" class="btn btn-default">
+                              <input class="yes" type="radio" name="going1" value="1"><br>YES</input></a>
+                            <a type="button" class="btn btn-default">
+                            <input class="no" type="radio" name="going1" value="0"><br>NO</input></a>
+                    </div>
+                    <div class="col-xs-4 my_planHeader my_plan2">
+                      <div class="time1">
+                        <div class="my_planTitle"><%= pageTime2 %></div>
+                         <a type="button" class="btn btn-default">
+                           <input class="yes" type="radio" name="going2" value="1"><br>YES</input></a>
+                         <a type="button" class="btn btn-default">
+                          <input class="no" type="radio" name="going2" value="0"><br>NO</input></a>
+                    </div>
+                    <div class="col-xs-4 my_planHeader my_plan3">
+                      <div class="time1">
+                        <div class="my_planTitle"><%= pageTime3 %></div>
+                         <a type="button" class="btn btn-default">
+                           <input class="yes" type="radio" name="going3" value="1"><br>YES</input></a>
+                         <a type="button" class="btn btn-default">
+                          <input class="no" type="radio" name="going3" value="0"><br>NO</input></a>
+                    </div>
+               </div>
+           </div>
+       </div>
     </div>
     </div>
 	</div>
