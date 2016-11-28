@@ -10,11 +10,12 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Narrow Jumbotron Template for Bootstrap</title>
+    <title>Schoodle Response</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Bootstrap core CSS -->
     <!-- <link href="../../dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
@@ -22,75 +23,175 @@
     <!-- <link rel="stylesheet" href="jumbotron-narrow.css" type="text/css" /> -->
 
     <link rel="stylesheet" href="/styles/output.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/new-event.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
 
     <link rel="stylesheet" href="/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="/styles/event-response.css" type="text/css" />
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <script src="/scripts/app.js" ></script>
+    <script type="text/javascript" src="/scripts/app.js" ></script>
+    <script type="text/javascript" src="/scripts/event-response.js" ></script>
 
   </head>
+  <body>
 
- <body>
-
-<div class="event-name"><%= eventTitle %></div>
-<div class="event-date"><%= eventDate %></div>
-<!-- This is the area where the new user can choose the times they want to go to. Also includes counter -->
-<div id="user-response">
-  <table>
-
-  <form id="response-time1" action="/events/<%= uniqueurl%>" method="POST">
-    <tr>
-      <div class="time1">
-        <%= pageTime1 %>
-        <input class="yes" type="radio" name="going1" value="1">YES</input>
-        <input class="no" type="radio" name="going1" value="0">NO</input>
-      </div>
-    </tr>
-
-    <tr>
-      <div class="time2">
-        <%= pageTime2 %>
-        <input class="yes" type="radio" name="going2" value="1">YES</input>
-        <input class="no" type="radio" name="going2" value="0">NO</input>
-      </div>
-    </tr>
-
-    <tr>
-      <div class="time3">
-        <%= pageTime3 %>
-        <input class="yes" type="radio" name="going3" value="1">YES</input>
-        <input class="no" type="radio" name="going3" value="0">NO</input>
-      </div>
-    </tr>
-
-    <!-- The form where a new user will put in name and email and will also submit their times -->
-    <div class="user-info">
-      <input class="first-name" type="text" name="first-name">Please enter your first name here</input>
-      <br>
-      <input class="last-name" type="text" name="last-name">Please enter your last name here</input>
-      <br>
-      <input class="user-email" type="email" name="user-email">Please enter your email here</input>
-      <br>
-      <input type="hidden" name="hiddenURL" value="<%= uniqueurl %>">
-      <input class="submit" type="submit" value="submit">
-    </div>
-
-  </form>
-
-  </table>
-</div>
-
-<!-- This box is where all the user responses will be -->
-  <div class="user-responses">
-  <% message.forEach(function(response) { %>
-  <%= response %>
-  <br>
-  <%  }); %>
+  <div class="panel panel-default">
+  <div class="panel-body"><h1><b><%= eventTitle %></b></h1></div>
   </div>
 
-  </body>
+<div class="container">
+	<div class="row">
+    <div class="col-md-6">
+    <!-- Nav tabs -->
+    <div class="card">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Event URL</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Event Date</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Description</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Responses</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home"><%= uniqueurl %></div>
+        <div role="tabpanel" class="tab-pane" id="profile"><%= eventDate %></div>
+        <div role="tabpanel" class="tab-pane" id="messages"><%= description %></div>
+        <div role="tabpanel" class="tab-pane" id="settings"></div>
+    </div>
+ <body>
+   <h1><div class="event-name"><%= eventTitle %></div></h1>
+   <h1><div class="event-date"><%= eventDate %></div></h1>
+
+   <div id="user-response" class="voting">
+   <form id="response-time1" action="/events/:uniqueurl" method="POST">
+   <div class="container">
+       <div class="row">
+           <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+               <div class="row">
+                   <div class="col-xs-4 my_planHeader my_plan1">
+                        <div class="time1">
+                           <div class="my_planTitle"><%= pageTime1 %></div>
+                            <a type="button" class="btn btn-default">
+                              <input class="yes" type="radio" name="going1" value="1"><br>YES</input></a>
+                            <a type="button" class="btn btn-default">
+                            <input class="no" type="radio" name="going1" value="0"><br>NO</input></a>
+                    </div>
+                    <div class="col-xs-4 my_planHeader my_plan2">
+                      <div class="time1">
+                        <div class="my_planTitle"><%= pageTime2 %></div>
+                         <a type="button" class="btn btn-default">
+                           <input class="yes" type="radio" name="going2" value="1"><br>YES</input></a>
+                         <a type="button" class="btn btn-default">
+                          <input class="no" type="radio" name="going2" value="0"><br>NO</input></a>
+                    </div>
+                    <div class="col-xs-4 my_planHeader my_plan3">
+                      <div class="time1">
+                        <div class="my_planTitle"><%= pageTime3 %></div>
+                         <a type="button" class="btn btn-default">
+                           <input class="yes" type="radio" name="going3" value="1"><br>YES</input></a>
+                         <a type="button" class="btn btn-default">
+                          <input class="no" type="radio" name="going3" value="0"><br>NO</input></a>
+                    </div>
+               </div>
+           </div>
+       </div>
+    </div>
+    </div>
+	</div>
+</div>
+    <form class="form-horizontal">
+    <fieldset>
+
+    <!-- Form Name -->
+    <legend class="title">RSVP</legend>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">First Name</label>
+      <div class="col-md-5">
+      <input id="textinput" name="first-name" type="text" placeholder="First Name" class="form-control input-md" required="">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">Last Name</label>
+      <div class="col-md-5">
+      <input id="textinput" name="last-name" type="text" placeholder="Last Name" class="form-control input-md" required="">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">Email</label>
+      <div class="col-md-5">
+      <input id="textinput" name="user-email" type="text" placeholder="Email" class="form-control input-md" required="">
+
+      </div>
+    </div>
+
+    <!-- Multiple Radios (inline) -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="radios"><%= pageTime1 %></label>
+      <div class="col-md-4">
+        <label class="radio-inline" for="radios-0">
+          <input type="radio" name="going1" id="radios-0" value="1" checked="checked">
+          YES
+        </label>
+        <label class="radio-inline" for="radios-1">
+          <input type="radio" name="going1" id="radios-1" value="0">
+          NO
+        </label>
+      </div>
+    </div>
+
+    <!-- Multiple Radios (inline) -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="radios"><%= pageTime2 %></label>
+      <div class="col-md-4">
+        <label class="radio-inline" for="radios-0">
+          <input type="radio"  name="going2" id="radios-0" value="1" checked="checked">
+          YES
+        </label>
+        <label class="radio-inline" for="radios-1">
+          <input type="radio"  name="going2" id="radios-1" value="0">
+          NO
+        </label>
+      </div>
+    </div>
+
+    <!-- Multiple Radios (inline) -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="radios"><%= pageTime3 %></label>
+      <div class="col-md-4">
+        <label class="radio-inline" for="radios-0">
+          <input type="radio" name="going3" id="radios-0" value="1" checked="checked">
+          YES
+        </label>
+        <label class="radio-inline" for="radios-1">
+          <input type="radio" name="going3" id="radios-1" value="0">
+          NO
+        </label>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="btn btn-success" type="submit">Submit</button>
+      </div>
+    </div>
+
+    </fieldset>
+    </form>
+
+</body>
 
 </html>

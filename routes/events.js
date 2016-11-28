@@ -19,6 +19,13 @@ const checkUser = function(result) {
      return true;
    }
  }
+
+ const checkCorrectURL = function(result) {
+   if (result.length >= 1) {
+    return true;
+  }
+}
+
 module.exports = (knex) => {
 
   router.get("/login", (req, res) => {
@@ -26,9 +33,9 @@ module.exports = (knex) => {
   })
 
  router.post("/login", (req, res) => {
-   const firstName = req.body.firstName;
-   const lastName = req.body.lastName;
-   const email = req.body.email;
+   const firstName = req.body["first-name"];
+   const lastName = req.body["last-name"];
+   const email = req.body["user-email"];
    knex("attendees")
      .select()
      .where({first_name: firstName, last_name: lastName, email: email})
@@ -43,10 +50,13 @@ module.exports = (knex) => {
       .join("events", "attendees.id", "=", "events.attendees_id")
       .select("uniqueurl")
       .then (function(uniqueurl) {
-        console.log(uniqueurl[0].uniqueurl);
-        console.log("Successful login");
-        res.redirect(`/events/${uniqueurl[0].uniqueurl}`);
+        if (!checkCorrectURL(uniqueurl)) {
+          throw new Error("User not attendee for this event.")
+        }
+        return uniqueurl
       })
+     .then((uniqueurl) => {
+     })
    })
    .catch(function(err) {
      res.status(401).send(err.message);
@@ -64,9 +74,9 @@ module.exports = (knex) => {
 
   router.post("/new", (req, res) => {
     const title = req.body.title;
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
+    const firstName = req.body["first-name"];
+    const lastName = req.body["last-name"];
+    const email = req.body["user-email"];
     const description = req.body.description;
     const date = req.body.date;
     const time1 = req.body.time1;

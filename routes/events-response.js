@@ -89,6 +89,7 @@ module.exports = (knex) => {
     .where('events.uniqueurl', uniqueURL)
     .select()
     .then(function(id){
+      templateVar.description = id[0].description;
       templateVar.eventTitle = id[0].title;
       templateVar.eventDate = id[0].date.toString().slice(0, 15);
       knex('event_times')
@@ -111,9 +112,9 @@ module.exports = (knex) => {
     const going1 = Number(req.body.going1);
     const going2 = Number(req.body.going2);
     const going3 = Number(req.body.going3);
-    const userFirstName = req.body['first-name'];
-    const userLastName = req.body['last-name'];
-    const userEmail = req.body['user-email'];
+    const userFirstName = req.body["first-name"];
+    const userLastName = req.body["last-name"];
+    const userEmail = req.body["user-email"];
 
     knex("attendees")
       .select()
