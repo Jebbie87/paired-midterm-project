@@ -1,3 +1,9 @@
+# App Details
+===========================
+A midterm project at Lighthouse Labs.
+
+This app is a simpler version of <a href="http://doodle.com/">Doodle</a>. It is not yet completed but will be completed at a later date.
+
 # Node Skeleton
 
 ## Project Setup
